@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="file">
+	<insert id="uploadFile" parameterType="Map">
+		INSERT INTO "TB_CARBON_D1_2" VALUES (#{usage_year_month},#{land_location},#{road_name_land_location},
+		#{city_code},#{legal_code},#{classification_code},#{lot},#{parcel},#{new_address_no},#{new_street_code},#{new_address_land_code},
+		#{new_address_bon_no},#{new_address_bu_no},#{amount_kwh})
+	</insert>
+</mapper>

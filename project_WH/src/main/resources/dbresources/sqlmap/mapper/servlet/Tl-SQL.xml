@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="tl">
+	<select id="selectSd" resultType="SdDTO">
+		select sd_nm,sd_cd from tl_sd
+	</select>
+	
+	<select id="selectSgg" resultType="SggDTO" parameterType="String">
+		select sgg_nm, adm_sect_c as sgg_cd from tl_sgg WHERE sd_nm = #{name}
+	</select>
+	
+	<select id="selectGeom" parameterType="String" resultType="Map">
+		select (select ST_XMax(geom) as xmax FROM tl_sd WHERE sd_nm = #{name}::varchar order by xmax desc limit 1)
+		,(select ST_YMax(geom) as ymax FROM tl_sd WHERE  sd_nm = #{name}::varchar order by ymax desc limit 1)
+		,(select  ST_XMin(geom) as xmin FROM tl_sd WHERE  sd_nm = #{name}::varchar order by xmin  limit 1)
+		,(select ST_YMin(geom) as ymin FROM tl_sd WHERE  sd_nm = #{name}::varchar order by ymin limit 1)
+		    from tl_sd limit 1
+	</select>
+	
+	<select id="selectbjdGeom" parameterType="String" resultType="Map">
+		select (select ST_XMax(geom) as xmax FROM tl_sgg WHERE sgg_nm = #{sggnm}::varchar order by xmax desc limit 1)
+		,(select ST_YMax(geom) as ymax FROM tl_sgg WHERE sgg_nm = #{sggnm}::varchar order by ymax desc limit 1)
+		,(select  ST_XMin(geom) as xmin FROM tl_sgg WHERE sgg_nm = #{sggnm}::varchar order by xmin  limit 1)
+		,(select ST_YMin(geom) as ymin FROM tl_sgg WHERE sgg_nm = #{sggnm}::varchar order by ymin limit 1)
+		    from tl_sgg limit 1
+	</select>
+	
+	<select id="selectLegend1"  resultType="Map">
+		select bucket,min_val+((max_val-min_val)/5)*(bucket-1)as from_val, min_val+((max_val-min_val)/5)*bucket as to_val
+		from (
+			select width_bucket(totalusage,min_val, max_val,4) as bucket
+			from d1bjdview, (select min(totalusage) as min_val, max(totalusage) as max_val
+			from d1bjdview) stats
+			GROUP BY bucket
+			order by bucket
+		) bucket_tl,(
+			select min(totalusage) as min_val, max(totalusage) as max_val
+			from d1bjdview
+			) stats
+
+	</select>
+	
+	<select id="selectLegend2" resultType="Map">
+		with arr as (
+			select 	unnest(CDB_JenksBins(array_agg(totalusage),5,0,TRUE)) as from_val,
+			unnest(CDB_JenksBins(array_agg(totalusage),5)) as to_val
+			from d1bjdview
+		)
+		
+		select from_val, to_val
+		from arr
+
+	</select>
+	
+	<select id="getChart" resultType="Map" parameterType="String">
+		select sgg_nm as nm,amount from d1sggtable where sd_cd =#{sdcd}
+	</select>
+	
+	<select id="sdChart" resultType="Map">
+		select sd_nm as nm,amount from d1sdtable
+	</select>
+</mapper>
