@@ -41,9 +41,9 @@ public class TlImpl implements TlService{
 	}
 
 	@Override
-	public List<Map<String, Object>> selectLegend(String legendFlag) {
+	public List<Map<String, Object>> selectLegend(String legendFlag,String sggno) {
 		// TODO Auto-generated method stub
-		return tlDAO.selectLegend(legendFlag);
+		return tlDAO.selectLegend(legendFlag,sggno);
 	}
 
 	@Override
