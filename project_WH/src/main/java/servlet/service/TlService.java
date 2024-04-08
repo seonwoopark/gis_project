@@ -19,7 +19,7 @@ public interface TlService {
 	List<Map<String, Object>> selectbjdGeom(String sggnm);
 
 
-	List<Map<String, Object>> selectLegend(String legendFlag);
+	List<Map<String, Object>> selectLegend(String legendFlag, String sggno);
 
 
 	List<Map<String, Object>> getChart(String sdmn);

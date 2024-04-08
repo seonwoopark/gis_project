@@ -105,9 +105,9 @@ public class RestFullController {
 	}
 	
 	@PostMapping("legend.do")
-	public Map<String,Object> getLegend(@RequestParam("legend")String legendFlag){
+	public Map<String,Object> getLegend(@RequestParam("legend")String legendFlag, @RequestParam("sggno") String sggno){
 		
-		List<Map<String,Object>> legend = tlService.selectLegend(legendFlag);
+		List<Map<String,Object>> legend = tlService.selectLegend(legendFlag,sggno);
 		Map<String,Object> map = new HashMap<String, Object>();
 		
 		map.put("legend", legend);

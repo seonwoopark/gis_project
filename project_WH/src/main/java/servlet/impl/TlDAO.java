@@ -36,12 +36,12 @@ public class TlDAO extends EgovComAbstractDAO{
 		return sqlsession.selectList("tl.selectbjdGeom",sggnm);
 	}
 
-	public List<Map<String, Object>> selectLegend(String legendFlag) {
+	public List<Map<String, Object>> selectLegend(String legendFlag,String sggno) {
 		// TODO Auto-generated method stub
 		if(Integer.parseInt(legendFlag) == 1) {
-			return sqlsession.selectList("tl.selectLegend1");			
+			return sqlsession.selectList("tl.selectLegend1",sggno);			
 		} else {
-			return sqlsession.selectList("tl.selectLegend2");
+			return sqlsession.selectList("tl.selectLegend2",sggno);
 		}
 	}
 

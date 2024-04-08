@@ -24,17 +24,18 @@ public class ServletController {
 	@Resource(name="TlService")
 	private TlService TlService;
 	
+	@GetMapping("/text.do")
+	public String text(ModelMap model) {
+		List<SdDTO> list = TlService.selectSd();
+		model.addAttribute("sdlist",list);
+		return "main/text";
+	}
+	
 	@GetMapping(value = "/main.do")
 	public String mainTest(ModelMap model) throws Exception {
 		List<SdDTO> list = TlService.selectSd();
 		model.addAttribute("sdlist",list);
 		
 		return "main/main";
-	}
-	
-	
-	@GetMapping("/test.do")
-	public String test() {
-		return "main/test";
 	}
 }
