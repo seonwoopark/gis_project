@@ -487,7 +487,7 @@
 																4670269.5 ],
 														'SRS' : 'EPSG:3857', // SRID
 														'FORMAT' : 'image/png', // 포맷
-														'STYLES':'natural'
+														'STYLES':'natural_break'
 													},
 													serverType : 'geoserver',
 												}),
@@ -625,7 +625,7 @@
 			var maskHeight = $(document).height();
 			var maskWidth = window.document.body.clientWidth;
 
-			var mask = "<div id='mask' style='position:absolute;z-indx:5;background-color: rgba(0, 0, 0, 0.13);display:none;left:0;top:0;'></div>";
+			var mask = "<div id='mask' style='position:absolute;z-indx:10000;background-color: rgba(0, 0, 0, 0.13);display:none;left:0;top:0;'></div>";
 			var loading = "<div id='loading' style='background-color:white;width:500px'><h1 id='uploadtext' style='text-align:center'>업로드 진행중</h1></div>";
 
 			$('body').append(mask);
